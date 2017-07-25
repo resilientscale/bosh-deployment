@@ -9,11 +9,13 @@ vm_types:
     cpu: 2
     ram: 1024
     disk: 3240
+    gui: true
 - name: large
   cloud_properties:
     cpu: 2
     ram: 4096
     disk: 30_240
+    gui: true
 
 disk_types:
 - name: default
@@ -28,14 +30,20 @@ networks:
   - range: ((internal_cidr))
     gateway: ((internal_gw))
     azs: [z1, z2, z3]
-    dns: [8.8.8.8]
-    reserved: []
+    dns:
+    - "2001:4860:4860:0000:0000:0000:0000:8888"
+    - "2001:4860:4860:0000:0000:0000:0000:8844"
+    reserved:
+    - "fd7a:eeed:e696:969f:0000:0000:0000:0004"
     cloud_properties:
       name: ((network_name))
 
 compilation:
-  workers: 2
+  workers: 1
   reuse_compilation_vms: true
   az: z1
   vm_type: default
   network: default
+  env:
+    bosh:
+      password: $1$aZ7DdXsr$OLUgGHe8pUKNSY/d9DEq90
