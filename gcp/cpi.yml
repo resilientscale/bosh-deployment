@@ -21,7 +21,7 @@
     machine_type: g1-small
     root_disk_size_gb: 40
     root_disk_type: pd-standard
-    service_account: bosh-user@bosh-177015.iam.gserviceaccount.com
+    service_account: terraform@bosh-177015.iam.gserviceaccount.com
 
 - type: replace
   path: /disk_pools/name=disks/cloud_properties?
