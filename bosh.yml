@@ -3,13 +3,13 @@ name: bosh
 
 releases:
 - name: bosh
-  version: "262.3"
-  url: https://s3.amazonaws.com/bosh-compiled-release-tarballs/bosh-262.3-ubuntu-trusty-3421.9-20170706-183731-831697577-20170706183736.tgz?versionId=7GmwKfufgb5JwWhJ.cwIWLnejOtm2Hu4
-  sha1: 1eae3f06282417e54ebb199656458f9d6c38e2af
+  version: "263"
+  url: https://bosh.io/d/github.com/cloudfoundry/bosh?v=263
+  sha1: cb3f6a1f1880b2883e04bd6a5d6fd0cb9af87fa1
 
 resource_pools:
 - name: vms
-  network: default
+  network: private
   env:
     bosh:
       password: '*'
@@ -21,13 +21,22 @@ disk_pools:
   disk_size: 32_768
 
 networks:
-- name: default
+- name: vip
+  type: vip
+- name: private
   type: manual
   subnets:
-  - range: ((internal_cidr))
-    gateway: ((internal_gw))
-    static: [((internal_ip))]
-    dns: [8.8.8.8]
+  - range: 10.0.0.0/29
+    gateway: 10.0.0.1
+    static: [10.0.0.3-10.0.0.7]
+    cloud_properties:
+      network_name: bosh
+      subnetwork_name: bosh-us-central1
+      xpn_host_project_id: bosh-177015
+      ephemeral_external_ip: false
+      tags:
+        - internal
+        - no-ip
 
 instance_groups:
 - name: bosh
@@ -41,7 +50,7 @@ instance_groups:
   resource_pool: vms
   persistent_disk_pool: disks
   networks:
-  - name: default
+  - name: private
     static_ips: [((internal_ip))]
   properties:
     nats:

@@ -10,17 +10,18 @@
 - type: replace
   path: /resource_pools/name=vms/stemcell?
   value:
-    url: https://bosh.io/d/stemcells/bosh-google-kvm-ubuntu-trusty-go_agent?v=3421.9
-    sha1: 408f78a2091d108bb5418964026e73c822def32d
+    url: https://bosh.io/d/stemcells/bosh-google-kvm-ubuntu-trusty-go_agent?v=3445
+    sha1: 4977df67a5532674408c2c712a5060735c46aed2
 
 # Configure sizes
 - type: replace
   path: /resource_pools/name=vms/cloud_properties?
   value:
     zone: ((zone))
-    machine_type: n1-standard-1
+    machine_type: g1-small
     root_disk_size_gb: 40
     root_disk_type: pd-standard
+    service_account: bosh-user@bosh-177015.iam.gserviceaccount.com
 
 - type: replace
   path: /disk_pools/name=disks/cloud_properties?
