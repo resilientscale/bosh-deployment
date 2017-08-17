@@ -50,7 +50,7 @@ networks:
   subnets:
   - range: 10.0.0.0/24
     gateway: 10.0.0.1
-    static: [10.0.0.3-10.0.0.7]
+    static: [10.0.0.2-10.0.0.7]
     az: z1
     cloud_properties:
       network_name: bosh
